@@ -121,7 +121,7 @@ def compute_metrics(config,
                     output_path, 
                     scales_img, 
                     scales_txt, 
-                    num_samples = 5000, 
+                    num_samples = 50, 
                     split = "test", 
                     steps = 50, 
                     res = 512, 
@@ -141,6 +141,7 @@ def compute_metrics(config,
                     split=split, 
                     res=res
                     )
+            print(len(dataset), num_samples)
             assert num_samples <= len(dataset)
             print(f'Processing t={scale_txt}, i={scale_img}')
             torch.manual_seed(seed)
@@ -209,7 +210,7 @@ def main():
     parser.add_argument("--config", default="configs/generate.yaml", type=str)
     parser.add_argument("--output_path", default="analysis/", type=str)
     parser.add_argument("--ckpt", default="checkpoints/instruct-pix2pix-00-22000.ckpt", type=str)
-    parser.add_argument("--dataset", default="data/clip-filtered-dataset/", type=str)
+    parser.add_argument("--dataset", default="data/clip-filtered-small/", type=str)
     parser.add_argument("--vae-ckpt", default=None, type=str)
     args = parser.parse_args()
 

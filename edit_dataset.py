@@ -11,6 +11,7 @@ import torchvision
 from einops import rearrange
 from PIL import Image
 from torch.utils.data import Dataset
+import os
 
 
 class EditDataset(Dataset):
@@ -77,7 +78,7 @@ class EditDatasetEval(Dataset):
         self,
         path: str,
         split: str = "train",
-        splits: tuple[float, float, float] = (0.9, 0.05, 0.05),
+        splits: tuple[float, float, float] = (0.0, 0.0, 1.0),
         res: int = 256,
     ):
         assert split in ("train", "val", "test")
@@ -104,6 +105,7 @@ class EditDatasetEval(Dataset):
     def __getitem__(self, i: int) -> dict[str, Any]:
         name, seeds = self.seeds[i]
         propt_dir = Path(self.path, name)
+        print(os.getcwd())
         seed = seeds[torch.randint(0, len(seeds), ()).item()]
         with open(propt_dir.joinpath("prompt.json")) as fp:
             prompt = json.load(fp)
